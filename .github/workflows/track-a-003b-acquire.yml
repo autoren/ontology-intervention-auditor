@@ -28,7 +28,7 @@ jobs:
           md5sum "$archive" | tee work/out/ARCHIVE_MD5SUMS.txt
           stat -c '%n %s bytes' "$archive" | tee work/out/ARCHIVE_SIZE.txt
 
-      - name: Inventory archive and select only named ls20 run trees
+      - name: Inventory archive and select only the two frozen ls20 run trees
         shell: bash
         run: |
           set -euo pipefail
@@ -45,17 +45,30 @@ jobs:
           out = pathlib.Path('work/out')
           selected_root = out / 'selected'
           selected_root.mkdir(parents=True, exist_ok=True)
-          run_ids = (
-              'ewma_sv_v1.6_gpt-5.6-sol_max_run1',
-              'ewma_sv_v1.6_gpt-5.6-sol_xhigh_run1',
-          )
+
+          # The frozen semantic result-block labels map to these exact archive paths.
+          # The alias correction is documented in audits/track-a-003b/ACQUISITION_PATH_ALIAS_ERRATUM.md.
+          path_aliases = {
+              'ewma_sv_v1.6_gpt-5.6-sol_max_run1':
+                  'runs_additional/ewma_v1.6_sv_gpt-5.6-sol_max_run1/ls20',
+              'ewma_sv_v1.6_gpt-5.6-sol_xhigh_run1':
+                  'runs_additional/ewma_v1.6_sv_gpt-5.6-sol_xhigh_run1/ls20',
+          }
+          selected_prefixes = tuple(path_aliases.values())
 
           def safe_name(name: str) -> bool:
               p = pathlib.PurePosixPath(name)
               return bool(name) and not p.is_absolute() and '..' not in p.parts
 
+          def matching_prefix(name: str) -> str | None:
+              for prefix in selected_prefixes:
+                  if name == prefix or name.startswith(prefix + '/'):
+                      return prefix
+              return None
+
           members_meta = []
           selected_names = []
+          selected_counts = {prefix: 0 for prefix in selected_prefixes}
           with tarfile.open(archive, mode='r:gz') as tf:
               for member in tf:
                   name = member.name
@@ -65,14 +78,22 @@ jobs:
                       'type': member.type.decode('ascii', 'replace') if isinstance(member.type, bytes) else str(member.type),
                       'mode': member.mode,
                   })
-                  low = name.lower()
-                  if any(run_id.lower() in low for run_id in run_ids) and 'ls20' in low:
+                  prefix = matching_prefix(name)
+                  if prefix is not None:
                       if not safe_name(name):
                           raise RuntimeError(f'unsafe archive member: {name!r}')
                       selected_names.append(name)
+                      selected_counts[prefix] += 1
+
+          missing = [prefix for prefix, count in selected_counts.items() if count == 0]
+          if missing:
+              raise RuntimeError(f'frozen selection prefix missing from archive: {missing!r}')
 
           (out / 'ARCHIVE_MEMBERS.json').write_text(
               json.dumps(members_meta, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          (out / 'PATH_ALIASES.json').write_text(
+              json.dumps(path_aliases, indent=2, sort_keys=True) + '\n', encoding='utf-8'
           )
           (out / 'SELECTED_MEMBER_NAMES.txt').write_text(
               ''.join(f'{name}\n' for name in selected_names), encoding='utf-8'
@@ -88,6 +109,7 @@ jobs:
                       target.mkdir(parents=True, exist_ok=True)
                       continue
                   if not member.isfile():
+                      # Links and device-like entries remain represented in the inventory but are not materialized.
                       continue
                   target.parent.mkdir(parents=True, exist_ok=True)
                   src = tf.extractfile(member)
@@ -107,17 +129,26 @@ jobs:
               with path.open('rb') as f:
                   for chunk in iter(lambda: f.read(1024 * 1024), b''):
                       h.update(chunk)
-              hashes.append({'path': path.relative_to(selected_root).as_posix(), 'size': path.stat().st_size, 'sha256': h.hexdigest()})
+              hashes.append({
+                  'path': path.relative_to(selected_root).as_posix(),
+                  'size': path.stat().st_size,
+                  'sha256': h.hexdigest(),
+              })
+          if not hashes:
+              raise RuntimeError('frozen selection produced no regular files')
+
           (out / 'SELECTED_FILE_MANIFEST.json').write_text(
               json.dumps(hashes, indent=2, sort_keys=True) + '\n', encoding='utf-8'
           )
           summary = {
               'archive_member_count': len(members_meta),
               'selected_member_count': len(selected_names),
+              'selected_member_counts_by_prefix': selected_counts,
               'selected_file_count': len(hashes),
               'selected_total_bytes': sum(x['size'] for x in hashes),
-              'run_ids': list(run_ids),
-              'selection_rule': 'member path contains exact run id and substring ls20 (case-insensitive)',
+              'semantic_run_labels': list(path_aliases),
+              'archive_path_aliases': path_aliases,
+              'selection_rule': 'member path is one of the two exact frozen ls20 prefixes or a descendant',
               'candidate_execution': False,
               'arc_execution': False,
           }
