@@ -1,0 +1,204 @@
+name: Track A 003b public artifact acquisition attempt 02
+
+on:
+  pull_request:
+    paths:
+      - audits/track-a-003b/TRIGGER_02.txt
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download and verify pinned public archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/out
+          url='https://zenodo.org/api/records/21412274/files/article2_main_runs_additional.tar.gz/content'
+          archive='work/article2_main_runs_additional.tar.gz'
+          curl --fail --location --retry 5 --retry-delay 3 --output "$archive" "$url"
+          test "$(stat -c %s "$archive")" = '797835543'
+          echo '4dd279f099609392c30cffa468801316  work/article2_main_runs_additional.tar.gz' | md5sum -c -
+          sha256sum "$archive" | tee work/out/ARCHIVE_SHA256SUMS.txt
+          md5sum "$archive" | tee work/out/ARCHIVE_MD5SUMS.txt
+          stat -c '%n %s bytes' "$archive" | tee work/out/ARCHIVE_SIZE.txt
+
+      - name: Select actual archive paths for frozen run pair and ls20
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import tarfile
+
+          archive = pathlib.Path('work/article2_main_runs_additional.tar.gz')
+          out = pathlib.Path('work/out')
+          selected_root = out / 'selected'
+          selected_root.mkdir(parents=True, exist_ok=True)
+
+          specs = [
+              {
+                  'published_run_id': 'ewma_sv_v1.6_gpt-5.6-sol_max_run1',
+                  'archive_run_root': 'runs_additional/ewma_v1.6_sv_gpt-5.6-sol_max_run1',
+                  'game': 'ls20',
+              },
+              {
+                  'published_run_id': 'ewma_sv_v1.6_gpt-5.6-sol_xhigh_run1',
+                  'archive_run_root': 'runs_additional/ewma_v1.6_sv_gpt-5.6-sol_xhigh_run1',
+                  'game': 'ls20',
+              },
+          ]
+
+          def safe_name(name: str) -> bool:
+              p = pathlib.PurePosixPath(name)
+              return bool(name) and not p.is_absolute() and '..' not in p.parts
+
+          def selected_by_spec(name: str, spec: dict[str, str]) -> bool:
+              root = spec['archive_run_root']
+              game = spec['game']
+              subtree = f'{root}/{game}'
+              sidecars = {
+                  f'{root}/{game}_scorecard.json',
+                  f'{root}/{game}_cost_estimation.json',
+                  f'{root}/{game}_actions.json',
+              }
+              return name == subtree or name.startswith(subtree + '/') or name in sidecars
+
+          selected_names: list[str] = []
+          selected_inventory: list[dict[str, object]] = []
+          archive_roots: set[str] = set()
+          archive_member_count = 0
+          per_spec = {
+              spec['published_run_id']: {'members': 0, 'files': 0, 'bytes': 0}
+              for spec in specs
+          }
+
+          with tarfile.open(archive, mode='r:gz') as tf:
+              for member in tf:
+                  archive_member_count += 1
+                  name = member.name
+                  parts = pathlib.PurePosixPath(name).parts
+                  if len(parts) >= 2 and parts[0] == 'runs_additional':
+                      archive_roots.add('/'.join(parts[:2]))
+                  matched = [spec for spec in specs if selected_by_spec(name, spec)]
+                  if not matched:
+                      continue
+                  if len(matched) != 1:
+                      raise RuntimeError(f'ambiguous selected member: {name!r}')
+                  if not safe_name(name):
+                      raise RuntimeError(f'unsafe archive member: {name!r}')
+                  if not (member.isdir() or member.isfile()):
+                      raise RuntimeError(f'unsupported selected member type {member.type!r}: {name!r}')
+                  selected_names.append(name)
+                  selected_inventory.append({
+                      'name': name,
+                      'size': member.size,
+                      'type': member.type.decode('ascii', 'replace') if isinstance(member.type, bytes) else str(member.type),
+                      'mode': member.mode,
+                      'published_run_id': matched[0]['published_run_id'],
+                  })
+                  summary = per_spec[matched[0]['published_run_id']]
+                  summary['members'] += 1
+                  if member.isfile():
+                      summary['files'] += 1
+                      summary['bytes'] += int(member.size)
+
+          for spec in specs:
+              summary = per_spec[spec['published_run_id']]
+              if summary['files'] == 0:
+                  raise RuntimeError(f'no files selected for {spec}')
+
+          selected_set = set(selected_names)
+          with tarfile.open(archive, mode='r:gz') as tf:
+              for member in tf:
+                  if member.name not in selected_set:
+                      continue
+                  target = selected_root / pathlib.PurePosixPath(member.name)
+                  if member.isdir():
+                      target.mkdir(parents=True, exist_ok=True)
+                      continue
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  src = tf.extractfile(member)
+                  if src is None:
+                      raise RuntimeError(f'cannot read selected member: {member.name}')
+                  with src, target.open('wb') as dst:
+                      while True:
+                          chunk = src.read(1024 * 1024)
+                          if not chunk:
+                              break
+                          dst.write(chunk)
+                  os.chmod(target, member.mode & 0o777)
+
+          file_manifest: list[dict[str, object]] = []
+          for path in sorted(p for p in selected_root.rglob('*') if p.is_file()):
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              file_manifest.append({
+                  'path': path.relative_to(selected_root).as_posix(),
+                  'size': path.stat().st_size,
+                  'sha256': h.hexdigest(),
+              })
+
+          (out / 'RUN_LABEL_MAPPING.json').write_text(
+              json.dumps(specs, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          (out / 'ARCHIVE_RUN_ROOTS.json').write_text(
+              json.dumps(sorted(archive_roots), indent=2) + '\n', encoding='utf-8'
+          )
+          (out / 'SELECTED_MEMBER_MANIFEST.json').write_text(
+              json.dumps(selected_inventory, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          (out / 'SELECTED_FILE_MANIFEST.json').write_text(
+              json.dumps(file_manifest, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          summary = {
+              'attempt_id': '003b-02',
+              'archive_member_count': archive_member_count,
+              'archive_run_roots': sorted(archive_roots),
+              'per_frozen_run': per_spec,
+              'selected_member_count': len(selected_names),
+              'selected_file_count': len(file_manifest),
+              'selected_total_bytes': sum(int(x['size']) for x in file_manifest),
+              'selection_rule': 'actual archive run-root mapping plus complete ls20 subtree and three named ls20 sidecars',
+              'candidate_execution': False,
+              'arc_execution': False,
+              'paid_or_model_api_calls': False,
+              'credentials_used': False,
+          }
+          (out / 'ACQUISITION_SUMMARY.json').write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(summary, sort_keys=True))
+          PY
+
+      - name: Package selected bytes and evidence deterministically
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd work/out
+          find . -type f ! -name PAYLOAD_SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > PAYLOAD_SHA256SUMS.txt
+          tar --sort=name --mtime='UTC 2026-08-21' --owner=0 --group=0 --numeric-owner -czf ../track-a-003b-attempt-02-selected-ls20.tar.gz .
+          sha256sum ../track-a-003b-attempt-02-selected-ls20.tar.gz | tee ../TRACK_A_003B_ATTEMPT_02_PACKAGE_SHA256SUMS.txt
+
+      - name: Upload selected public evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: track-a-003b-attempt-02-selected-ls20
+          path: |
+            work/track-a-003b-attempt-02-selected-ls20.tar.gz
+            work/TRACK_A_003B_ATTEMPT_02_PACKAGE_SHA256SUMS.txt
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
