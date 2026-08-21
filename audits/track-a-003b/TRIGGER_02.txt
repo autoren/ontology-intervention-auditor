@@ -1,0 +1,3 @@
+Track A 003b acquisition attempt 02.
+Use the archive-observed `ewma_v1.6_sv` run roots for the same frozen published run pair and extract only the complete `ls20` subtrees plus named sidecars.
+No candidate execution, ARC action, paid/model/API call, credential use, private environment, or Track B procedure.
