@@ -1,0 +1,2 @@
+Authorized public archive acquisition trigger.
+No paid/model/API calls, credentials, private ARC environments, or real ARC actions.
