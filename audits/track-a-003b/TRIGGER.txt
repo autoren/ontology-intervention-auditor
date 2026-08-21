@@ -1,2 +1,4 @@
 Authorized public archive acquisition trigger.
 No paid/model/API calls, credentials, private ARC environments, or real ARC actions.
+
+Second pass: resolve the preserved semantic run labels to the exact archive path aliases documented in ACQUISITION_PATH_ALIAS_ERRATUM.md.
