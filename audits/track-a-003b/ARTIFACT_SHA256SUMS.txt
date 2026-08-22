@@ -1,0 +1,11 @@
+42f705ad97161005b7dc95c45241fe02004a272787ba4b201a91c441c78e231d  OIA-1-Track-A-003b-Candidate-Frontier-Feasibility.zip
+d707839034f844d8716a705ec6213f3bcbb4c8a23419d9219bb9a25557b24349  track-a-003b-selected-ls20.zip
+1b239318741872a339e4a1a31aa3f6876ee298fdb17db328075a343d56a52a1a  track-a-003b-attempt-02-selected-ls20.zip
+924f46e9e228a746c19b4a39968a7b100fcf29cd034ac7ede70f573db5c8ae81  OIA-1-Track-A-003b-Gate-Result.json
+c1e836e942d76b23cf411ce751d9a777a6ff2436556d9b3b9b6c33670c207a7a  OIA-1-Track-A-003b-Acquisition-Report.md
+9546ff0fabe4b62d774c644c43df1575f97dbdfe4530e1de60247a80e2dcfcd5  OIA-1-Track-A-003b-Attempt-Provenance-Registry.json
+b2d785c6c521fd41fa5ef4f70d7fc7dea70eaf7fb0e0a2aaf2f6edde5a310cd2  OIA-1-Track-A-003b-Candidate-Frontier-Result.json
+237a297a9954fb6e428e470be9db0a81e608a61194319b0c76f15b076016574f  OIA-1-Track-A-003b-Source-Provenance.json
+d084075c91c1d5a99e8b3ec5a13777b2ff15363785fcac49bbc5be6911dd807c  OIA-1-Track-A-003b-Validation-Transcript.txt
+778136d8ce6b12bf88cc9b3a697588549e93b07f41a9f35abd3fff92607665bf  OIA-1-Track-A-003b-Frozen-Protocol-Reference.json
+a1690fb196a87ca513a77076970919a307608259f0f8bd67a99d5f871e36fd28  OIA-1-Track-A-003b-Reproduction-Commands.md
