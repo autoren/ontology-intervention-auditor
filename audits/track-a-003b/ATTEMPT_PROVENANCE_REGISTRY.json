@@ -1,0 +1,209 @@
+{
+  "acquisition_attempts": [
+    {
+      "archive_sha256": "c3d85c4a75170de08837b9fc63cb7a7dde389b1205ca71b9f0fed16a9c09cf93",
+      "artifact_zip_sha256": "d707839034f844d8716a705ec6213f3bcbb4c8a23419d9219bb9a25557b24349",
+      "attempt_id": "003b-01",
+      "inner_package_sha256": "a6408d64f2f984765dad0462fed82a85c069fc02aec8b59d0d02c18328ea4ccb",
+      "preserved": true,
+      "reason": "archive path alias mismatch",
+      "selected_files": 0,
+      "status": "preserved_zero_selection"
+    },
+    {
+      "archive_sha256": "c3d85c4a75170de08837b9fc63cb7a7dde389b1205ca71b9f0fed16a9c09cf93",
+      "artifact_zip_sha256": "1b239318741872a339e4a1a31aa3f6876ee298fdb17db328075a343d56a52a1a",
+      "attempt_id": "003b-02",
+      "inner_tar_sha256": "de141756be11b7d54730584ce16d3d0979a9bbd8aef707a73d50ab8a112c2cbf",
+      "manifest_verification": "pass",
+      "selected_bytes": 28897676,
+      "selected_files": 10683,
+      "status": "acquired_and_manifest_verified"
+    }
+  ],
+  "admitted_candidate_ids": [
+    "max_final",
+    "max_iteration_2"
+  ],
+  "audit_id": "OIA-1-TRACK-A-003b",
+  "behavioral_class_count": 2,
+  "candidate_attempt_count": 13,
+  "candidate_attempts": [
+    {
+      "admission_status": "admitted_first_in_frozen_order_for_behavior",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_final",
+      "duplicate_of": null,
+      "frozen_order": 1,
+      "prefix_exact": true,
+      "provenance_note": "released final worktree; fixed by archive member hashes",
+      "smoke_exit_code": 0,
+      "source_type": "released_final_worktree"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_final",
+      "duplicate_of": "max_final",
+      "frozen_order": 2,
+      "prefix_exact": true,
+      "provenance_note": "released final worktree; fixed by archive member hashes",
+      "smoke_exit_code": 0,
+      "source_type": "released_final_worktree"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_1",
+      "commit_time_utc": "2026-07-13T20:16:45Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 3,
+      "git_commit": "d00e83e746fb6b54b08307037523deabb8d8ba85",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_iteration_1",
+      "commit_time_utc": "2026-07-14T15:30:20Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 4,
+      "git_commit": "a268f906dbbcb4fc81b4c3e8194399c946615cca",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "admitted_first_in_frozen_order_for_behavior",
+      "behavior_sha256": "ea5c7bb2147d2a1aa6cfe0ae18538f9641675ffd899e784627de27d95c564fee",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_2",
+      "commit_time_utc": "2026-07-13T20:38:03Z",
+      "duplicate_of": null,
+      "frozen_order": 5,
+      "git_commit": "93d546b7e1f2991f297949edf10c8fa8c5a225ea",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_iteration_2",
+      "commit_time_utc": "2026-07-14T15:54:55Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 6,
+      "git_commit": "27603948ef3a5d3f649698a58e68883d980fb174",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_3",
+      "commit_time_utc": "2026-07-13T21:21:30Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 7,
+      "git_commit": "c01487dcef23de0a15dc042ffe34f54bcaee11c9",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_iteration_3",
+      "commit_time_utc": "2026-07-14T16:39:31Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 8,
+      "git_commit": "af45f2f88590e24400aa271570c7803ead77f15f",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_4",
+      "commit_time_utc": "2026-07-13T21:57:07Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 9,
+      "git_commit": "024cc3951084bca3cd3a75cdd81ace1d52aeccbd",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_iteration_4",
+      "commit_time_utc": "2026-07-14T17:26:42Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 10,
+      "git_commit": "74d48803bc79682167e2f5297c1f32819f3eb332",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_5",
+      "commit_time_utc": "2026-07-13T23:10:09Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 11,
+      "git_commit": "1c77d48c63b4cde6b049d96807dc5a1a170a8f30",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "xhigh_iteration_5",
+      "commit_time_utc": "2026-07-14T18:27:20Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 12,
+      "git_commit": "2d739b029ee1068838df238252738ff65f262250",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    },
+    {
+      "admission_status": "rejected_behavioral_duplicate",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bounded_execution_errors": 0,
+      "candidate_id": "max_iteration_6",
+      "commit_time_utc": "2026-07-14T00:24:40Z",
+      "duplicate_of": "max_final",
+      "frozen_order": 13,
+      "git_commit": "13618acd13f10eb351e2fa580b41cf62ba6a08b4",
+      "prefix_exact": true,
+      "smoke_exit_code": 0,
+      "source_type": "git_iteration_tag"
+    }
+  ],
+  "claim_boundary": "Feasibility of acquiring two deterministic, exact-prefix, behaviorally distinct executable candidates within the frozen finite screen only.",
+  "frozen_order_rule": {
+    "git_blob_sha1": "9ae3dba40fbc9df061af689a3cedda8b4b28b0ad",
+    "path": "audits/track-a-003b/checkpoint_enumeration_rule.frozen.json",
+    "sha256": "2802384b0dc5750ae5cfa47287174754c631f5b5b86d803e1ef7680cfd1efe5a"
+  },
+  "gate_verdict": "candidate_frontier_feasible",
+  "sampling_note": "All candidates are checkpoints or final worktrees of one learner; they are separately sampled, not independently authored.",
+  "schema_version": 1
+}
