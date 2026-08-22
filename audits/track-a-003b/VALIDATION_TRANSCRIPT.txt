@@ -1,0 +1,121 @@
+OIA-1 Track A 003b validation transcript
+Date: 2026-08-21
+
+BASELINE
+v0.2.1 expected and observed SHA-256:
+2653020afcbf636def260da1517c9e3ba41c2ba1175fc210d4847b303febc33b
+modified or repackaged: false
+
+FROZEN RULES
+parent 003a protocol SHA-256:
+47c18e32ea64a19d45842fd13d2a80ab59161992aaef7c13cf501459de75ea59
+003b checkpoint-order Git blob SHA-1:
+9ae3dba40fbc9df061af689a3cedda8b4b28b0ad
+003b checkpoint-order SHA-256:
+2802384b0dc5750ae5cfa47287174754c631f5b5b86d803e1ef7680cfd1efe5a
+frozen first candidates: max final, xhigh final
+checkpoint order: round-robin, ascending iteration, max before xhigh
+behavioral representative: first candidate in frozen order
+
+UPSTREAM PUBLIC ARTIFACT
+filename: article2_main_runs_additional.tar.gz
+size: 797835543 bytes [PASS]
+MD5: 4dd279f099609392c30cffa468801316 [PASS]
+SHA-256: c3d85c4a75170de08837b9fc63cb7a7dde389b1205ca71b9f0fed16a9c09cf93
+
+ACQUISITION ATTEMPT 01
+archive members: 916132
+selected files: 0
+result: preserved path-alias failure
+artifact ZIP SHA-256: d707839034f844d8716a705ec6213f3bcbb4c8a23419d9219bb9a25557b24349
+inner package SHA-256: a6408d64f2f984765dad0462fed82a85c069fc02aec8b59d0d02c18328ea4ccb
+
+ACQUISITION ATTEMPT 02
+selected members: 11407
+selected files: 10683
+selected bytes: 28897676
+artifact ZIP SHA-256: 1b239318741872a339e4a1a31aa3f6876ee298fdb17db328075a343d56a52a1a
+inner tar SHA-256: de141756be11b7d54730584ce16d3d0979a9bbd8aef707a73d50ab8a112c2cbf
+fresh immutable manifest verification: 10683/10683 PASS
+
+RELEASED GIT HISTORIES
+max fsck: PASS; HEAD 13618acd13f10eb351e2fa580b41cf62ba6a08b4; tags iteration_1..iteration_6
+xhigh fsck: PASS; HEAD 2d739b029ee1068838df238252738ff65f262250; tags iteration_1..iteration_5
+
+FROZEN PREFIX
+frame text SHA-256: 0fc0241eb2d3c992a2af68643f36e3878f5140fc85aed38410dd66ef5486afc7
+metadata SHA-256: 0f1dfbd539066cba7373dcce2004196480db34dc2f8c01477e66e711b0c74347
+canonical int16 SHA-256: 6305f5acb31a6c46bd260d54eb9c29dcddc91803a21189cd672ae4c0778b3f17
+P0 equality across runs: PASS
+actions: ACTION1 ACTION2 ACTION3 ACTION4
+ACTION6: unavailable
+words: 84
+
+CANDIDATE SCREEN
+attempts in frozen order: 13
+prefix-exact attempts: 13
+complete seed-0 finite screens: 13
+execution-error attempts: 0
+behavioral classes: 2
+
+ADMITTED max_final
+provenance: fixed released final worktree; base HEAD 13618acd13f10eb351e2fa580b41cf62ba6a08b4
+native replay: levels 1..7 PASS
+native replay log SHA-256: da113ec23434015592e213f620136178017d1079c70a871352715ad39b6bd13e
+full reconstruction versus deepcopy reset: PASS
+fresh processes: 8/8 PASS
+prefix exact: 8/8
+errors: 0
+blocked events: 0
+network/subprocess attempts: 0
+behavior SHA-256: 35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a
+
+ADMITTED max_iteration_2
+commit: 93d546b7e1f2991f297949edf10c8fa8c5a225ea
+commit time: 2026-07-13T20:38:03Z
+native replay: levels 1..3 PASS
+native replay log SHA-256: 47d46e3aae7a3633917eca5d15baee82c9721c36b0ce7b693a53000c13e001cd
+full reconstruction versus deepcopy reset: PASS
+fresh processes: 8/8 PASS
+prefix exact: 8/8
+errors: 0
+blocked events: 0
+network/subprocess attempts: 0
+behavior SHA-256: ea5c7bb2147d2a1aa6cfe0ae18538f9641675ffd899e784627de27d95c564fee
+
+FINITE DIVERGENCE
+separating words: 48/84
+shortest separator: ACTION2
+max_final frame SHA-256: 3598cd92e4b667ab5962843fe8e2058e253b138b4aec18f28e3db8680f1a111c
+max_iteration_2 frame SHA-256: 6305f5acb31a6c46bd260d54eb9c29dcddc91803a21189cd672ae4c0778b3f17
+both status: RUNNING
+claim: finite-boundary behavioral difference only
+
+INTEGRITY / LEAKAGE
+candidate-core forbidden static findings: 0
+candidate-core external runtime reads: 0
+candidate-core blocked events: 0
+candidate-core network/subprocess attempts: 0
+game-source-like paths: 0
+expected live-client network file excluded: client/client.py
+max intermediate frames preserved: 389
+xhigh intermediate frames preserved: 474
+animation fidelity claimed: false
+settled-state candidate claim: true
+
+ANALYSIS COPY NOTE
+`git status` refreshed two disposable .git/index files. Candidate source files were unchanged.
+The untouched artifact was re-extracted and all 10683 files reverified before packaging.
+
+PROHIBITED OPERATIONS
+OIA separability runs: 0
+OIA-selected real interventions: 0
+real ARC actions: 0
+paid/model/API calls: 0
+credentials: 0
+private/sealed environments: 0
+cp437 reruns: 0
+Track B claims: 0
+
+GATE VERDICT
+candidate_frontier_feasible
