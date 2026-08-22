@@ -1,0 +1,114 @@
+{
+  "admitted_candidates": {
+    "max_final": {
+      "archive_path": "runs_additional/ewma_v1.6_sv_gpt-5.6-sol_max_run1/ls20/run/agent_run",
+      "base_git_head": "13618acd13f10eb351e2fa580b41cf62ba6a08b4",
+      "behavior_sha256": "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a",
+      "bundle_manifest_sha256": "9ef47407be06b4cf8a2c97c13a1427e4ca8b1825ead3102684b9d9706fcf5aae",
+      "matrix": {
+        "blocked_event_count_total": 0,
+        "deterministic": true,
+        "error_count_total": 0,
+        "network_or_subprocess_attempted": false,
+        "prefix_exact_all": true,
+        "run_count": 8,
+        "unique_behavior_sha256": [
+          "35aedc731ac854f713bffdb5463f88435b5a89e417841ee1b6c143e2599bb82a"
+        ],
+        "word_count_each": [
+          84
+        ]
+      },
+      "native_replay": "levels 1..7 verified",
+      "native_replay_log_sha256": "da113ec23434015592e213f620136178017d1079c70a871352715ad39b6bd13e",
+      "provenance_note": "fixed final worktree bytes released after iteration_6; selected first by the frozen candidate order",
+      "source_type": "released_final_worktree"
+    },
+    "max_iteration_2": {
+      "behavior_sha256": "ea5c7bb2147d2a1aa6cfe0ae18538f9641675ffd899e784627de27d95c564fee",
+      "bundle_manifest_sha256": "5e4584750ad7c088b86f88d701c1b652309b564c62cf24d3d1e57df6c85d738e",
+      "checkpoint_message": "level_3 58 2",
+      "commit": "93d546b7e1f2991f297949edf10c8fa8c5a225ea",
+      "commit_time_utc": "2026-07-13T20:38:03Z",
+      "matrix": {
+        "blocked_event_count_total": 0,
+        "deterministic": true,
+        "error_count_total": 0,
+        "network_or_subprocess_attempted": false,
+        "prefix_exact_all": true,
+        "run_count": 8,
+        "unique_behavior_sha256": [
+          "ea5c7bb2147d2a1aa6cfe0ae18538f9641675ffd899e784627de27d95c564fee"
+        ],
+        "word_count_each": [
+          84
+        ]
+      },
+      "native_replay": "levels 1..3 verified",
+      "native_replay_log_sha256": "47d46e3aae7a3633917eca5d15baee82c9721c36b0ce7b693a53000c13e001cd",
+      "source_type": "git_iteration_tag",
+      "tag": "iteration_2"
+    }
+  },
+  "audit_id": "OIA-1-TRACK-A-003b",
+  "behavioral_comparison": {
+    "first_separator": {
+      "max_final": {
+        "error": null,
+        "steps": [
+          {
+            "action": "ACTION2",
+            "frame_sha256": "3598cd92e4b667ab5962843fe8e2058e253b138b4aec18f28e3db8680f1a111c",
+            "level": 1,
+            "status": "RUNNING"
+          }
+        ]
+      },
+      "max_iteration_2": {
+        "error": null,
+        "steps": [
+          {
+            "action": "ACTION2",
+            "frame_sha256": "6305f5acb31a6c46bd260d54eb9c29dcddc91803a21189cd672ae4c0778b3f17",
+            "level": 1,
+            "status": "RUNNING"
+          }
+        ]
+      },
+      "word": [
+        "ACTION2"
+      ]
+    },
+    "global_equivalence_or_impossibility_claimed": false,
+    "non_equivalent_within_frozen_boundary": true,
+    "separating_word_count": 48
+  },
+  "credentials_used": false,
+  "frozen_boundary": {
+    "candidate_independent_actions": [
+      "ACTION1",
+      "ACTION2",
+      "ACTION3",
+      "ACTION4"
+    ],
+    "checkpoint_order_git_blob_sha1": "9ae3dba40fbc9df061af689a3cedda8b4b28b0ad",
+    "checkpoint_order_path": "audits/track-a-003b/checkpoint_enumeration_rule.frozen.json",
+    "checkpoint_order_sha256": "2802384b0dc5750ae5cfa47287174754c631f5b5b86d803e1ef7680cfd1efe5a",
+    "deduplication": "retain first candidate in frozen order for each behavior signature",
+    "finite_words": "all words of lengths 1, 2, and 3",
+    "opened_prefix": "ls20_P0_reset_observation; zero actions",
+    "parent_protocol_path": "audits/track-a-003a/OIA-1-Track-A-003a-Frozen-Protocol.json",
+    "parent_protocol_sha256": "47c18e32ea64a19d45842fd13d2a80ab59161992aaef7c13cf501459de75ea59",
+    "settled_state_only": true,
+    "word_count": 84
+  },
+  "full_result_sha256": "b2d785c6c521fd41fa5ef4f70d7fc7dea70eaf7fb0e0a2aaf2f6edde5a310cd2",
+  "gate_verdict": "candidate_frontier_feasible",
+  "oia_separability_consulted": false,
+  "package_zip_sha256": "42f705ad97161005b7dc95c45241fe02004a272787ba4b201a91c441c78e231d",
+  "paid_or_model_api_call_executed": false,
+  "real_arc_action_executed": false,
+  "schema_version": 1,
+  "track": "A_opened_candidate_acquisition_feasibility",
+  "track_b_claim_made": false
+}
