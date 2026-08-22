@@ -1,0 +1,74 @@
+{
+  "accepted_baseline": {
+    "archive_sha256": "2653020afcbf636def260da1517c9e3ba41c2ba1175fc210d4847b303febc33b",
+    "commit": "3ca35d4",
+    "modified": false,
+    "repackaged": false,
+    "tag": "oia-v0.2.1"
+  },
+  "audit_id": "OIA-1-TRACK-A-003b",
+  "immutable_vs_analysis_copy": {
+    "analysis_side_effect_detected": "git status refreshed two disposable .git/index files",
+    "candidate_source_files_affected": false,
+    "immutable_manifest_pass": true,
+    "response": "re-extracted untouched artifact and verified all 10,683 files before packaging"
+  },
+  "learner": {
+    "agent": "ewma_sv_v1.6",
+    "commit": "ef104f198adf2ad2a3506638dc21d0249eb8308c",
+    "repository": "astroseger/arc-3-agents-baseline1",
+    "source_license": "MIT"
+  },
+  "official_authorities": {
+    "arc_engine": {
+      "commit": "b495c6acaf253c9681cd7b75c4299d352e9ce6f8",
+      "license": "MIT",
+      "python": ">=3.12",
+      "repository": "arcprize/ARCEngine",
+      "version": "0.9.3"
+    },
+    "arc_toolkit": {
+      "commit": "f12822c4d550121c35a275008d964afbbed47d2f",
+      "license": "MIT",
+      "python": ">=3.12",
+      "repository": "arcprize/ARC-AGI",
+      "version": "0.9.9"
+    }
+  },
+  "released_artifact": {
+    "doi": "10.5281/zenodo.21412274",
+    "filename": "article2_main_runs_additional.tar.gz",
+    "md5": "4dd279f099609392c30cffa468801316",
+    "record_id": 21412274,
+    "record_license": "CC-BY-4.0",
+    "sha256": "c3d85c4a75170de08837b9fc63cb7a7dde389b1205ca71b9f0fed16a9c09cf93",
+    "size_bytes": 797835543
+  },
+  "runtime": {
+    "packages": {
+      "numpy": "2.3.5",
+      "numpy_record_sha256": "b17edc1ad8c703016d71f37f1f800ea4f745062cea40e0670ee77839335a13fe",
+      "scipy": "1.17.0",
+      "scipy_record_sha256": "b52200bb0a9bf6c0f68c87fc444957fbce52eefa97368625da3efcaaa8c62f64"
+    },
+    "python": {
+      "cache_tag": "cpython-313",
+      "executable": "/opt/pyvenv/bin/python",
+      "implementation": "CPython",
+      "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+      "version": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+    },
+    "sysconfig": {
+      "platform": "linux-x86_64",
+      "soabi": "cpython-313-x86_64-linux-gnu"
+    }
+  },
+  "schema_version": 1,
+  "selected_subset": {
+    "artifact_zip_sha256": "1b239318741872a339e4a1a31aa3f6876ee298fdb17db328075a343d56a52a1a",
+    "bytes": 28897676,
+    "file_count": 10683,
+    "inner_tar_sha256": "de141756be11b7d54730584ce16d3d0979a9bbd8aef707a73d50ab8a112c2cbf",
+    "manifest_verification": "pass"
+  }
+}
